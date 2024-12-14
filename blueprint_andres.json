@@ -2,129 +2,6 @@
     "name": "Andres",
     "flow": [
         {
-            "id": 45,
-            "module": "make:makeApiCall",
-            "version": 1,
-            "parameters": {
-                "__IMTCONN__": 945475
-            },
-            "mapper": {
-                "url": "/v2/scenarios/{{var.scenario.id}}",
-                "body": "{\"scheduling\": \"{ \\\"date\\\": \\\"{{setSecond(setMinute(setHour(setDate(addMonths(now; 2); 0); 12); 0); 0)}}\\\", \\\"type\\\": \\\"once\\\" }\"}",
-                "method": "PATCH",
-                "headers": [
-                    {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                    }
-                ]
-            },
-            "metadata": {
-                "designer": {
-                    "x": -290,
-                    "y": 606,
-                    "name": "Corre último día del mes"
-                },
-                "restore": {
-                    "expect": {
-                        "qs": {
-                            "mode": "chose",
-                            "collapsed": true
-                        },
-                        "method": {
-                            "mode": "chose",
-                            "label": "PATCH"
-                        },
-                        "headers": {
-                            "mode": "chose",
-                            "items": [
-                                null
-                            ]
-                        }
-                    },
-                    "parameters": {
-                        "__IMTCONN__": {
-                            "data": {
-                                "scoped": "true",
-                                "connection": "make"
-                            },
-                            "label": "trigger mensual para proceso"
-                        }
-                    }
-                },
-                "parameters": [
-                    {
-                        "name": "__IMTCONN__",
-                        "type": "account:make",
-                        "label": "Connection",
-                        "required": true
-                    }
-                ],
-                "expect": [
-                    {
-                        "name": "url",
-                        "type": "text",
-                        "label": "URL",
-                        "required": true
-                    },
-                    {
-                        "name": "method",
-                        "type": "select",
-                        "label": "Method",
-                        "required": true,
-                        "validate": {
-                            "enum": [
-                                "GET",
-                                "POST",
-                                "PUT",
-                                "PATCH",
-                                "DELETE"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "headers",
-                        "spec": [
-                            {
-                                "name": "key",
-                                "type": "text",
-                                "label": "Key"
-                            },
-                            {
-                                "name": "value",
-                                "type": "text",
-                                "label": "Value"
-                            }
-                        ],
-                        "type": "array",
-                        "label": "Headers"
-                    },
-                    {
-                        "name": "qs",
-                        "spec": [
-                            {
-                                "name": "key",
-                                "type": "text",
-                                "label": "Key"
-                            },
-                            {
-                                "name": "value",
-                                "type": "text",
-                                "label": "Value"
-                            }
-                        ],
-                        "type": "array",
-                        "label": "Query String"
-                    },
-                    {
-                        "name": "body",
-                        "type": "any",
-                        "label": "Body"
-                    }
-                ]
-            }
-        },
-        {
             "id": 1,
             "module": "shopify:SearchForOrders",
             "version": 2,
@@ -132,94 +9,36 @@
                 "__IMTCONN__": 565101
             },
             "mapper": {
+                "financial_status": "paid",
+                "created_at_min": "{{addDays(setDate(now; 1); -1)}}",
+                "created_at_max": "{{addDays(now; 1)}}",
                 "limit": "1000",
                 "fields": [
-                    "app_id",
-                    "billing_address",
-                    "browser_ip",
-                    "buyer_accepts_marketing",
-                    "cancel_reason",
-                    "cancelled_at",
-                    "cart_token",
-                    "checkout_id",
-                    "checkout_token",
                     "closed_at",
                     "confirmed",
                     "contact_email",
                     "created_at",
-                    "currency",
-                    "current_total_duties_set",
-                    "customer",
-                    "customer_locale",
-                    "device_id",
-                    "discount_applications",
-                    "discount_codes",
-                    "email",
-                    "financial_status",
-                    "fulfillment_status",
-                    "fulfillments",
-                    "gateway",
-                    "id",
-                    "landing_site",
-                    "landing_site_ref",
                     "line_items",
-                    "location_id",
-                    "name",
-                    "note",
-                    "note_attributes",
-                    "number",
-                    "order_number",
-                    "order_status_url",
-                    "original_total_duties_set",
-                    "payment_gateway_names",
-                    "phone",
-                    "presentment_currency",
                     "processed_at",
-                    "processing_method",
-                    "reference",
-                    "referring_site",
-                    "refunds",
-                    "shipping_address",
-                    "shipping_lines",
-                    "source_identifier",
-                    "source_name",
-                    "source_url",
-                    "subtotal_price",
-                    "subtotal_price_set",
-                    "tags",
-                    "tax_lines",
-                    "taxes_included",
-                    "test",
-                    "token",
-                    "total_discounts",
-                    "total_discounts_set",
-                    "total_line_items_price",
-                    "total_line_items_price_set",
-                    "total_price",
-                    "total_price_set",
-                    "total_price_usd",
-                    "total_shipping_price_set",
-                    "total_tax",
-                    "total_tax_set",
-                    "total_tip_received",
-                    "total_weight",
-                    "updated_at",
-                    "user_id"
-                ],
-                "created_at_max": "{{addDays(now; 1)}}",
-                "created_at_min": "{{addDays(setDate(now; 1); -1)}}",
-                "financial_status": "paid"
+                    "updated_at"
+                ]
             },
             "metadata": {
                 "designer": {
-                    "x": 0,
-                    "y": 600
+                    "x": -463,
+                    "y": 606
                 },
                 "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "label": "conexion legit (legitskateshop.cl)",
+                            "data": {
+                                "scoped": "true",
+                                "connection": "shopify"
+                            }
+                        }
+                    },
                     "expect": {
-                        "fields": {
-                            "mode": "chose"
-                        },
                         "status": {
                             "mode": "chose",
                             "label": "Empty"
@@ -231,15 +50,9 @@
                         "fulfillment_status": {
                             "mode": "chose",
                             "label": "Empty"
-                        }
-                    },
-                    "parameters": {
-                        "__IMTCONN__": {
-                            "data": {
-                                "scoped": "true",
-                                "connection": "shopify"
-                            },
-                            "label": "conexion legit (legitskateshop.cl)"
+                        },
+                        "fields": {
+                            "mode": "chose"
                         }
                     }
                 },
@@ -409,6 +222,70 @@
             }
         },
         {
+            "id": 46,
+            "module": "builtin:BasicFeeder",
+            "version": 1,
+            "parameters": {},
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{map(1.line_items; \"vendor\"; \"vendor\"; \"Ouyea\")}}",
+                            "o": "array:contain",
+                            "b": "Ouyea"
+                        }
+                    ],
+                    [
+                        {
+                            "a": "{{map(1.line_items; \"vendor\"; \"vendor\"; \"Tesh\")}}",
+                            "o": "array:contain",
+                            "b": "Tesh"
+                        }
+                    ],
+                    [
+                        {
+                            "a": "{{map(1.line_items; lower(\"title\"))}}",
+                            "o": "array:contain",
+                            "b": "{{lower(\"Tesh\")}}"
+                        }
+                    ],
+                    [
+                        {
+                            "a": "{{map(1.line_items; lower(\"title\"))}}",
+                            "o": "text:contain",
+                            "b": "{{lower(\"Ouyea\")}}"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "array": "{{1.line_items}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": -116,
+                    "y": 607
+                },
+                "restore": {
+                    "expect": {
+                        "array": {
+                            "mode": "edit"
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "array",
+                        "type": "array",
+                        "label": "Array",
+                        "mode": "edit",
+                        "spec": []
+                    }
+                ]
+            }
+        },
+        {
             "id": 8,
             "module": "shopify:GetProduct",
             "version": 2,
@@ -420,36 +297,50 @@
                 "conditions": [
                     [
                         {
-                            "a": "{{1.line_items[].vendor}}",
-                            "b": "Ouyea",
-                            "o": "text:equal"
+                            "a": "{{46.vendor}}",
+                            "o": "text:equal",
+                            "b": "Ouyea"
                         }
                     ],
                     [
                         {
-                            "a": "{{1.line_items[].vendor}}",
-                            "b": "Tesh",
-                            "o": "text:equal"
+                            "a": "{{46.vendor}}",
+                            "o": "text:equal",
+                            "b": "Tesh"
+                        }
+                    ],
+                    [
+                        {
+                            "a": "{{lower(46.title)}}",
+                            "o": "text:contain",
+                            "b": "{{lower(\"Tesh\")}}"
+                        }
+                    ],
+                    [
+                        {
+                            "a": "{{lower(46.title)}}",
+                            "o": "text:contain",
+                            "b": "{{lower(\"Ouyea\")}}"
                         }
                     ]
                 ]
             },
             "mapper": {
-                "id": "{{1.line_items[].product_id}}"
+                "id": "{{46.product_id}}"
             },
             "metadata": {
                 "designer": {
-                    "x": 300,
-                    "y": 600
+                    "x": 246,
+                    "y": 594
                 },
                 "restore": {
                     "parameters": {
                         "__IMTCONN__": {
+                            "label": "conexion legit (legitskateshop.cl)",
                             "data": {
                                 "scoped": "true",
                                 "connection": "shopify"
-                            },
-                            "label": "conexion legit (legitskateshop.cl)"
+                            }
                         }
                     }
                 },
@@ -488,18 +379,18 @@
                     "y": 600
                 },
                 "restore": {
-                    "expect": {
-                        "ids": {
-                            "mode": "edit"
-                        }
-                    },
                     "parameters": {
                         "__IMTCONN__": {
+                            "label": "conexion legit (legitskateshop.cl)",
                             "data": {
                                 "scoped": "true",
                                 "connection": "shopify"
-                            },
-                            "label": "conexion legit (legitskateshop.cl)"
+                            }
+                        }
+                    },
+                    "expect": {
+                        "ids": {
+                            "mode": "edit"
                         }
                     }
                 },
@@ -514,13 +405,13 @@
                 "expect": [
                     {
                         "name": "ids",
-                        "spec": {
-                            "name": "value",
-                            "type": "text"
-                        },
                         "type": "array",
                         "label": "Inventory item IDs",
-                        "required": true
+                        "required": true,
+                        "spec": {
+                            "type": "text",
+                            "name": "value"
+                        }
                     },
                     {
                         "name": "limit",
@@ -1527,7 +1418,140 @@
             "freshVariables": false
         },
         "designer": {
-            "orphans": []
+            "orphans": [
+                [
+                    {
+                        "id": 45,
+                        "module": "make:makeApiCall",
+                        "version": 1,
+                        "parameters": {
+                            "__IMTCONN__": 945475
+                        },
+                        "mapper": {
+                            "url": "/v2/scenarios/{{var.scenario.id}}",
+                            "method": "PATCH",
+                            "headers": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\"scheduling\": \"{ \\\"date\\\": \\\"{{setSecond(setMinute(setHour(setDate(addMonths(now; 2); 0); 12); 0); 0)}}\\\", \\\"type\\\": \\\"once\\\" }\"}"
+                        },
+                        "metadata": {
+                            "designer": {
+                                "x": 2459,
+                                "y": 1207,
+                                "name": "Corre último día del mes",
+                                "messages": [
+                                    {
+                                        "category": "link",
+                                        "severity": "warning",
+                                        "message": "The module is not connected to the data flow."
+                                    }
+                                ]
+                            },
+                            "restore": {
+                                "parameters": {
+                                    "__IMTCONN__": {
+                                        "label": "trigger mensual para proceso",
+                                        "data": {
+                                            "scoped": "true",
+                                            "connection": "make"
+                                        }
+                                    }
+                                },
+                                "expect": {
+                                    "method": {
+                                        "mode": "chose",
+                                        "label": "PATCH"
+                                    },
+                                    "headers": {
+                                        "mode": "chose",
+                                        "items": [
+                                            null
+                                        ]
+                                    },
+                                    "qs": {
+                                        "mode": "chose",
+                                        "collapsed": true
+                                    }
+                                }
+                            },
+                            "parameters": [
+                                {
+                                    "name": "__IMTCONN__",
+                                    "type": "account:make",
+                                    "label": "Connection",
+                                    "required": true
+                                }
+                            ],
+                            "expect": [
+                                {
+                                    "name": "url",
+                                    "type": "text",
+                                    "label": "URL",
+                                    "required": true
+                                },
+                                {
+                                    "name": "method",
+                                    "type": "select",
+                                    "label": "Method",
+                                    "required": true,
+                                    "validate": {
+                                        "enum": [
+                                            "GET",
+                                            "POST",
+                                            "PUT",
+                                            "PATCH",
+                                            "DELETE"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "name": "headers",
+                                    "type": "array",
+                                    "label": "Headers",
+                                    "spec": [
+                                        {
+                                            "name": "key",
+                                            "type": "text",
+                                            "label": "Key"
+                                        },
+                                        {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Value"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "qs",
+                                    "type": "array",
+                                    "label": "Query String",
+                                    "spec": [
+                                        {
+                                            "name": "key",
+                                            "type": "text",
+                                            "label": "Key"
+                                        },
+                                        {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Value"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "body",
+                                    "type": "any",
+                                    "label": "Body"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            ]
         },
         "zone": "us2.make.com"
     }
