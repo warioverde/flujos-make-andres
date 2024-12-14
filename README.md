@@ -7,7 +7,8 @@ En caso que no sepas qué es make, es una herramienta que permite conectar aplic
 - Tener tienda en Shopify habilitada en make, además dentro de la tienda se debe de tener ventas en el mes en curso (entre el 01 de ese día y el día en el que se ejecuta el flujo)
 - Tener una cuenta en Gmail y api habilitada en make-> Tutorial (está en íngles): https://www.youtube.com/watch?v=EcE6NEZ7g8M
 - Tener configurado una api de make: esto es para que se ejecute el último día del mes de forma automática-> Tutorial (está en inglés): https://community.make.com/t/how-to-schedule-scenario-for-the-last-day-next-month-recurring/26515
-![andres_1](https://github.com/user-attachments/assets/2f432c1c-c49a-4e35-9304-fcf828f6231d)
+![andres_1](https://github.com/user-attachments/assets/b075d495-09ba-44e2-bfb1-a423a84dade5)
+
 
 ## Configuración
 - Para configurarlo tienen que cargar el blueprint en make
