@@ -1,0 +1,1534 @@
+{
+    "name": "Andres",
+    "flow": [
+        {
+            "id": 45,
+            "module": "make:makeApiCall",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 945475
+            },
+            "mapper": {
+                "url": "/v2/scenarios/{{var.scenario.id}}",
+                "body": "{\"scheduling\": \"{ \\\"date\\\": \\\"{{setSecond(setMinute(setHour(setDate(addMonths(now; 2); 0); 12); 0); 0)}}\\\", \\\"type\\\": \\\"once\\\" }\"}",
+                "method": "PATCH",
+                "headers": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": -290,
+                    "y": 606,
+                    "name": "Corre último día del mes"
+                },
+                "restore": {
+                    "expect": {
+                        "qs": {
+                            "mode": "chose",
+                            "collapsed": true
+                        },
+                        "method": {
+                            "mode": "chose",
+                            "label": "PATCH"
+                        },
+                        "headers": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "make"
+                            },
+                            "label": "trigger mensual para proceso"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:make",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "text",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "GET",
+                                "POST",
+                                "PUT",
+                                "PATCH",
+                                "DELETE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "qs",
+                        "spec": [
+                            {
+                                "name": "key",
+                                "type": "text",
+                                "label": "Key"
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Query String"
+                    },
+                    {
+                        "name": "body",
+                        "type": "any",
+                        "label": "Body"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 1,
+            "module": "shopify:SearchForOrders",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 565101
+            },
+            "mapper": {
+                "limit": "1000",
+                "fields": [
+                    "app_id",
+                    "billing_address",
+                    "browser_ip",
+                    "buyer_accepts_marketing",
+                    "cancel_reason",
+                    "cancelled_at",
+                    "cart_token",
+                    "checkout_id",
+                    "checkout_token",
+                    "closed_at",
+                    "confirmed",
+                    "contact_email",
+                    "created_at",
+                    "currency",
+                    "current_total_duties_set",
+                    "customer",
+                    "customer_locale",
+                    "device_id",
+                    "discount_applications",
+                    "discount_codes",
+                    "email",
+                    "financial_status",
+                    "fulfillment_status",
+                    "fulfillments",
+                    "gateway",
+                    "id",
+                    "landing_site",
+                    "landing_site_ref",
+                    "line_items",
+                    "location_id",
+                    "name",
+                    "note",
+                    "note_attributes",
+                    "number",
+                    "order_number",
+                    "order_status_url",
+                    "original_total_duties_set",
+                    "payment_gateway_names",
+                    "phone",
+                    "presentment_currency",
+                    "processed_at",
+                    "processing_method",
+                    "reference",
+                    "referring_site",
+                    "refunds",
+                    "shipping_address",
+                    "shipping_lines",
+                    "source_identifier",
+                    "source_name",
+                    "source_url",
+                    "subtotal_price",
+                    "subtotal_price_set",
+                    "tags",
+                    "tax_lines",
+                    "taxes_included",
+                    "test",
+                    "token",
+                    "total_discounts",
+                    "total_discounts_set",
+                    "total_line_items_price",
+                    "total_line_items_price_set",
+                    "total_price",
+                    "total_price_set",
+                    "total_price_usd",
+                    "total_shipping_price_set",
+                    "total_tax",
+                    "total_tax_set",
+                    "total_tip_received",
+                    "total_weight",
+                    "updated_at",
+                    "user_id"
+                ],
+                "created_at_max": "{{addDays(now; 1)}}",
+                "created_at_min": "{{addDays(setDate(now; 1); -1)}}",
+                "financial_status": "paid"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 600
+                },
+                "restore": {
+                    "expect": {
+                        "fields": {
+                            "mode": "chose"
+                        },
+                        "status": {
+                            "mode": "chose",
+                            "label": "Empty"
+                        },
+                        "financial_status": {
+                            "mode": "chose",
+                            "label": "Paid"
+                        },
+                        "fulfillment_status": {
+                            "mode": "chose",
+                            "label": "Empty"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "shopify"
+                            },
+                            "label": "conexion legit (legitskateshop.cl)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:shopify,shopify4",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "status",
+                        "type": "select",
+                        "label": "Status",
+                        "validate": {
+                            "enum": [
+                                "open",
+                                "closed",
+                                "cancelled",
+                                "any"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "financial_status",
+                        "type": "select",
+                        "label": "Financial status",
+                        "validate": {
+                            "enum": [
+                                "authorized",
+                                "pending",
+                                "paid",
+                                "partially_paid",
+                                "refunded",
+                                "partially_refunded",
+                                "voided",
+                                "unpaid",
+                                "any"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "fulfillment_status",
+                        "type": "select",
+                        "label": "Fulfillment status",
+                        "validate": {
+                            "enum": [
+                                "shipped",
+                                "partial",
+                                "unshipped",
+                                "unfulfilled",
+                                "any"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "type": "text",
+                        "label": "Name"
+                    },
+                    {
+                        "name": "customer_id",
+                        "type": "text",
+                        "label": "Customer ID"
+                    },
+                    {
+                        "name": "created_at_min",
+                        "type": "date",
+                        "label": "Created after"
+                    },
+                    {
+                        "name": "created_at_max",
+                        "type": "date",
+                        "label": "Created before"
+                    },
+                    {
+                        "name": "limit",
+                        "type": "number",
+                        "label": "Limit",
+                        "required": true
+                    },
+                    {
+                        "name": "fields",
+                        "type": "select",
+                        "label": "Fields",
+                        "multiple": true,
+                        "validate": {
+                            "enum": [
+                                "app_id",
+                                "billing_address",
+                                "browser_ip",
+                                "buyer_accepts_marketing",
+                                "cancel_reason",
+                                "cancelled_at",
+                                "cart_token",
+                                "checkout_id",
+                                "checkout_token",
+                                "closed_at",
+                                "confirmed",
+                                "contact_email",
+                                "created_at",
+                                "currency",
+                                "current_total_duties_set",
+                                "customer",
+                                "customer_locale",
+                                "device_id",
+                                "discount_applications",
+                                "discount_codes",
+                                "email",
+                                "financial_status",
+                                "fulfillment_status",
+                                "fulfillments",
+                                "gateway",
+                                "id",
+                                "landing_site",
+                                "landing_site_ref",
+                                "line_items",
+                                "location_id",
+                                "name",
+                                "note",
+                                "note_attributes",
+                                "number",
+                                "order_number",
+                                "order_status_url",
+                                "original_total_duties_set",
+                                "payment_gateway_names",
+                                "phone",
+                                "presentment_currency",
+                                "processed_at",
+                                "processing_method",
+                                "reference",
+                                "referring_site",
+                                "refunds",
+                                "shipping_address",
+                                "shipping_lines",
+                                "source_identifier",
+                                "source_name",
+                                "source_url",
+                                "subtotal_price",
+                                "subtotal_price_set",
+                                "tags",
+                                "tax_lines",
+                                "taxes_included",
+                                "test",
+                                "token",
+                                "total_discounts",
+                                "total_discounts_set",
+                                "total_line_items_price",
+                                "total_line_items_price_set",
+                                "total_price",
+                                "total_price_set",
+                                "total_price_usd",
+                                "total_shipping_price_set",
+                                "total_tax",
+                                "total_tax_set",
+                                "total_tip_received",
+                                "total_weight",
+                                "updated_at",
+                                "user_id"
+                            ]
+                        }
+                    }
+                ],
+                "advanced": true
+            }
+        },
+        {
+            "id": 8,
+            "module": "shopify:GetProduct",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 565101
+            },
+            "filter": {
+                "name": "",
+                "conditions": [
+                    [
+                        {
+                            "a": "{{1.line_items[].vendor}}",
+                            "b": "Ouyea",
+                            "o": "text:equal"
+                        }
+                    ],
+                    [
+                        {
+                            "a": "{{1.line_items[].vendor}}",
+                            "b": "Tesh",
+                            "o": "text:equal"
+                        }
+                    ]
+                ]
+            },
+            "mapper": {
+                "id": "{{1.line_items[].product_id}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 600
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "shopify"
+                            },
+                            "label": "conexion legit (legitskateshop.cl)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:shopify,shopify4",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "id",
+                        "type": "number",
+                        "label": "Product ID",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "module": "shopify:GetInventoryItem",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 565101
+            },
+            "mapper": {
+                "ids": "{{8.variants[].inventory_item_id}}",
+                "limit": "2"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 600
+                },
+                "restore": {
+                    "expect": {
+                        "ids": {
+                            "mode": "edit"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "shopify"
+                            },
+                            "label": "conexion legit (legitskateshop.cl)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:shopify,shopify4",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "ids",
+                        "spec": {
+                            "name": "value",
+                            "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Inventory item IDs",
+                        "required": true
+                    },
+                    {
+                        "name": "limit",
+                        "type": "number",
+                        "label": "Limit",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 23,
+            "module": "util:SetVariables",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "scope": "roundtrip",
+                "variables": [
+                    {
+                        "name": "Fecha Venta",
+                        "value": "{{formatDate(1.created_at; \"DD-MM-YY\")}}"
+                    },
+                    {
+                        "name": "Proveedor",
+                        "value": "{{8.vendor}}"
+                    },
+                    {
+                        "name": "Producto",
+                        "value": "{{8.title}}"
+                    },
+                    {
+                        "name": "Costo",
+                        "value": "{{5.cost}}"
+                    },
+                    {
+                        "name": "Cantidad",
+                        "value": "{{1.line_items[].quantity}}"
+                    },
+                    {
+                        "name": "Costo Total",
+                        "value": "{{1.line_items[].quantity * 5.cost}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 600
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        },
+                        "variables": {
+                            "items": [
+                                null,
+                                null,
+                                null,
+                                null,
+                                null,
+                                null
+                            ]
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "variables",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Variable name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "label": "Variable value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Variables"
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "Fecha Venta",
+                        "type": "any",
+                        "label": "Fecha Venta"
+                    },
+                    {
+                        "name": "Proveedor",
+                        "type": "any",
+                        "label": "Proveedor"
+                    },
+                    {
+                        "name": "Producto",
+                        "type": "any",
+                        "label": "Producto"
+                    },
+                    {
+                        "name": "Costo",
+                        "type": "any",
+                        "label": "Costo"
+                    },
+                    {
+                        "name": "Cantidad",
+                        "type": "any",
+                        "label": "Cantidad"
+                    },
+                    {
+                        "name": "Costo Total",
+                        "type": "any",
+                        "label": "Costo Total"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 24,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 600
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 12,
+                            "module": "util:FunctionAggregator2",
+                            "version": 1,
+                            "parameters": {
+                                "fn": "sum",
+                                "feeder": 1
+                            },
+                            "filter": {
+                                "name": "costo Tesh",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{23.Proveedor}}",
+                                            "b": "Tesh",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "value": "{{23.`Costo Total`}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Shopify - Search for Orders [1]"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "fn": {
+                                            "label": "SUM"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "fn",
+                                        "type": "select",
+                                        "label": "Aggregate function",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "avg",
+                                                "sum",
+                                                "count",
+                                                "max",
+                                                "min"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "number",
+                                        "label": "Value"
+                                    }
+                                ],
+                                "advanced": true
+                            },
+                            "flags": {
+                                "groupBy": "{{23.Proveedor}}"
+                            }
+                        },
+                        {
+                            "id": 33,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "costo total tesh",
+                                "scope": "roundtrip",
+                                "value": "{{12.result}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "costo total tesh",
+                                        "type": "any",
+                                        "label": "costo total tesh"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 31,
+                            "module": "util:FunctionAggregator2",
+                            "version": 1,
+                            "parameters": {
+                                "fn": "sum",
+                                "feeder": 1
+                            },
+                            "filter": {
+                                "name": "Costo Ouyea",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{23.Proveedor}}",
+                                            "b": "Ouyea",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "value": "{{23.`Costo Total`}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Shopify - Search for Orders [1]"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "fn": {
+                                            "label": "SUM"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "fn",
+                                        "type": "select",
+                                        "label": "Aggregate function",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "avg",
+                                                "sum",
+                                                "count",
+                                                "max",
+                                                "min"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "number",
+                                        "label": "Value"
+                                    }
+                                ],
+                                "advanced": true
+                            },
+                            "flags": {
+                                "groupBy": "{{23.Proveedor}}"
+                            }
+                        },
+                        {
+                            "id": 32,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "costo total ouyea",
+                                "scope": "roundtrip",
+                                "value": "{{31.result}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "costo total ouyea",
+                                        "type": "any",
+                                        "label": "costo total ouyea"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 15,
+                            "module": "util:TextAggregator",
+                            "version": 1,
+                            "parameters": {
+                                "feeder": 1,
+                                "rowSeparator": ""
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{23.Proveedor}}",
+                                            "b": "Tesh",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "value": "<tr>\n\t<td>{{23.`Fecha Venta`}}</td>\n\t<td>{{23.Proveedor}}</td>\n\t<td>{{23.Producto}}</td>\n\t<td>{{23.Costo}}</td>\n    <td>{{23.Cantidad}}</td>\n\t<td>{{23.`Costo Total`}}</td> \n</tr>{{newline}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 600
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Shopify - Search for Orders [1]"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "rowSeparator": {
+                                            "label": "Empty"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "rowSeparator",
+                                        "type": "select",
+                                        "label": "Row separator",
+                                        "validate": {
+                                            "enum": [
+                                                "\n",
+                                                "\t",
+                                                "other"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "advanced": true
+                            },
+                            "flags": {
+                                "groupBy": "{{23.Proveedor}}"
+                            }
+                        },
+                        {
+                            "id": 41,
+                            "module": "util:GetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "costo total tesh"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 600
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "costo total tesh",
+                                        "type": "any",
+                                        "label": "costo total tesh"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 39,
+                            "module": "util:ComposeTransformer",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "value": "    <table>\n        <thead>\n            <tr>\n                <th>Fecha de Venta</th>\n                <th>Proveedor</th>\n                <th>Producto</th>\n                <th>Costo</th>\n                <th>Cantidad</th>\n                <th>Costo Total</th>\n            </tr>\n        </thead>\n        <tbody>\n{{15.text}}\n        </tbody>\n        <tfoot>\n            <tr class=\"total-row\">\n                <td colspan=\"5\">Costo Total Tesh</td>\n                <td>{{41.`costo total tesh`}}</td>\n            </tr>\n        </tfoot>\n    </table>"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": 600
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 34,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "tabla excel tesh",
+                                "scope": "roundtrip",
+                                "value": "{{39.value}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2400,
+                                    "y": 600
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "tabla excel tesh",
+                                        "type": "any",
+                                        "label": "tabla excel tesh"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 35,
+                            "module": "util:TextAggregator",
+                            "version": 1,
+                            "parameters": {
+                                "feeder": 1,
+                                "rowSeparator": ""
+                            },
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{23.Proveedor}}",
+                                            "b": "Ouyea",
+                                            "o": "text:equal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "value": "<tr>\n\t<td>{{23.`Fecha Venta`}}</td>\n\t<td>{{23.Proveedor}}</td>\n\t<td>{{23.Producto}}</td>\n\t<td>{{23.Costo}}</td>\n    <td>{{23.Cantidad}}</td>\n\t<td>{{23.`Costo Total`}}</td> \n</tr>{{newline}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 900
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Shopify - Search for Orders [1]"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "rowSeparator": {
+                                            "label": "Empty"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "rowSeparator",
+                                        "type": "select",
+                                        "label": "Row separator",
+                                        "validate": {
+                                            "enum": [
+                                                "\n",
+                                                "\t",
+                                                "other"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "advanced": true
+                            },
+                            "flags": {
+                                "groupBy": "{{23.Proveedor}}"
+                            }
+                        },
+                        {
+                            "id": 42,
+                            "module": "util:GetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "costo total ouyea"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 900
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "costo total ouyea",
+                                        "type": "any",
+                                        "label": "costo total ouyea"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 43,
+                            "module": "util:ComposeTransformer",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "value": "    <table>\n        <thead>\n            <tr>\n                <th>Fecha de Venta</th>\n                <th>Proveedor</th>\n                <th>Producto</th>\n                <th>Costo</th>\n                <th>Cantidad</th>\n                <th>Costo Total</th>\n            </tr>\n        </thead>\n        <tbody>\n{{35.text}}\n        </tbody>\n        <tfoot>\n            <tr class=\"total-row\">\n                <td colspan=\"5\">Costo Total Ouyea</td>\n                <td>{{42.`costo total ouyea`}}</td>\n            </tr>\n        </tfoot>\n    </table>"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": 900
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 36,
+                            "module": "util:SetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "tabla excel ouyea",
+                                "scope": "roundtrip",
+                                "value": "{{43.value}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2400,
+                                    "y": 900
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "value",
+                                        "type": "any",
+                                        "label": "Variable value"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "tabla excel ouyea",
+                                        "type": "any",
+                                        "label": "tabla excel ouyea"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 37,
+                            "module": "builtin:BasicAggregator",
+                            "version": 1,
+                            "parameters": {
+                                "feeder": 1
+                            },
+                            "mapper": {
+                                "Proveedor": "{{23.Proveedor}}",
+                                "Fecha Venta": "{{23.`Fecha Venta`}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1500,
+                                    "y": 1200
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Shopify - Search for Orders [1]"
+                                        },
+                                        "target": {
+                                            "label": "Custom"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "id": 38,
+                            "module": "util:GetVariables",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "variables": [
+                                    "tabla excel ouyea",
+                                    "tabla excel tesh"
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1800,
+                                    "y": 1200
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "variables": {
+                                            "items": [
+                                                null,
+                                                null
+                                            ]
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "variables",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "text",
+                                            "label": "Variable name",
+                                            "required": true
+                                        },
+                                        "type": "array",
+                                        "label": "Variables"
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "tabla excel ouyea",
+                                        "type": "any",
+                                        "label": "tabla excel ouyea"
+                                    },
+                                    {
+                                        "name": "tabla excel tesh",
+                                        "type": "any",
+                                        "label": "tabla excel tesh"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 16,
+                            "module": "google-email:ActionSendEmail",
+                            "version": 2,
+                            "parameters": {
+                                "account": 714002
+                            },
+                            "mapper": {
+                                "cc": [],
+                                "to": [
+                                    "legitsbshop@gmail.com"
+                                ],
+                                "bcc": [],
+                                "from": "",
+                                "html": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Detalles de Venta</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f4f4f4;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            height: 100vh;\n            margin: 0;\n        }\n        table {\n            border-collapse: collapse;\n            width: 80%;\n            max-width: 600px;\n            background-color: #fff;\n            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n        }\n        th, td {\n            padding: 10px;\n            text-align: left;\n            border-bottom: 1px solid #ddd;\n        }\n        th {\n            background-color: #4CAF50;\n            color: white;\n        }\n        .total-row {\n            font-weight: bold;\n            background-color: #f4f4f4;\n        }\n    </style>\n</head>\n<body>\n<p>\nEstimados, junto con saludar envío resumen de costos Tesh y Ouyea en el periodo comprendido entre {{formatDate(setDate(now; 1); \"DD-MM-YY\")}} y {{formatDate(addDays(now; 1); \"DD-MM-YY\")}} \n</p>\n{{38.`tabla excel tesh`}}\n{{38.`tabla excel ouyea`}}\n<p> En caso de que no halla información en ese periodo, contactar soporte</p> \n</body>\n</html>",
+                                "subject": "Deudas mensuales Tesh y Ouyea",
+                                "attachments": []
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": 1200
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "cc": {
+                                            "mode": "chose"
+                                        },
+                                        "to": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null
+                                            ]
+                                        },
+                                        "bcc": {
+                                            "mode": "chose"
+                                        },
+                                        "attachments": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "account": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google-restricted"
+                                            },
+                                            "label": "My Google Restricted connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "account",
+                                        "type": "account:google-restricted",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "from",
+                                        "type": "text",
+                                        "label": "From"
+                                    },
+                                    {
+                                        "name": "to",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "email",
+                                            "label": "Email address",
+                                            "required": true
+                                        },
+                                        "type": "array",
+                                        "label": "To",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "subject",
+                                        "type": "text",
+                                        "label": "Subject"
+                                    },
+                                    {
+                                        "name": "html",
+                                        "type": "text",
+                                        "label": "Content"
+                                    },
+                                    {
+                                        "name": "attachments",
+                                        "spec": [
+                                            {
+                                                "name": "fileName",
+                                                "type": "filename",
+                                                "label": "File name",
+                                                "required": true,
+                                                "semantic": "file:name"
+                                            },
+                                            {
+                                                "name": "data",
+                                                "type": "buffer",
+                                                "label": "Data",
+                                                "required": true,
+                                                "semantic": "file:data"
+                                            },
+                                            {
+                                                "name": "cid",
+                                                "type": "text",
+                                                "label": "Content-ID"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Attachments"
+                                    },
+                                    {
+                                        "name": "cc",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "email",
+                                            "label": "Email address"
+                                        },
+                                        "type": "array",
+                                        "label": "Copy recipient"
+                                    },
+                                    {
+                                        "name": "bcc",
+                                        "spec": {
+                                            "name": "value",
+                                            "type": "email",
+                                            "label": "Email address"
+                                        },
+                                        "type": "array",
+                                        "label": "Blind copy recipient"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com"
+    }
+}
